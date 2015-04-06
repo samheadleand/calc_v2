@@ -117,3 +117,24 @@ class Tests(unittest.TestCase):
         self.c.key('=')
         self.assertEqual(self.c.display(), str(math.pi + 2))
 
+    def test_two_cubed(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('^')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('3')
+        self.assertEqual(self.c.display(), '3')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), '8')
+
+    def test_two_cubed(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('e')
+        self.assertEqual(self.c.display(), str(math.e))
+        self.c.key('^')
+        self.assertEqual(self.c.display(), str(math.e))
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), str(math.e ** 2))
