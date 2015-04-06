@@ -5,7 +5,7 @@ import math
 
 A_ENTRY, B_ENTRY = range(2)
 OPERATIONS = ['+', '-', '/', '*']
-#NUMBERS = {'pi':math.pi, 'e':math.e}
+NUMBERS = {'pi':math.pi, 'e':math.e}
 
 
 class Calculator:
@@ -48,6 +48,9 @@ class Calculator:
                 self.b = int(k)
                 self.o = self.o
                 self.state = B_ENTRY
+            elif k in NUMBERS.keys():
+                self.b = NUMBERS[k]
+                self.state = B_ENTRY
             elif k == '.':
                 self.a = self.a
                 self.b = 0
@@ -73,8 +76,14 @@ class Calculator:
                 else:
                     self.a = self.a
                     self.b = self.b + (int(k) * 10**(-self.decimal))
+                    self.decimal += 1
                     self.o = self.o
                     self.state = self.state
+            elif k in NUMBERS.keys():
+                self.b = NUMBERS[k]
+                self.o = None
+                self.apply_operation()
+                self.state = A_ENTRY
             elif k == '.':
                 if self.decimal == 0:
                     self.a = self.a

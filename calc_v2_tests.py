@@ -1,5 +1,6 @@
 import calc_v2
 import unittest
+import math
 
 class Tests(unittest.TestCase):
     def setUp(self):
@@ -62,3 +63,57 @@ class Tests(unittest.TestCase):
         self.assertEqual(self.c.display(), '3')
         self.c.key('=')
         self.assertEqual(self.c.display(), '3')
+
+    def test_enter_decimal(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('.')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '1.2')
+        
+    def test_enter_decimal_as_second_number(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('+')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('.')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '2.1')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), '3.1')
+
+    def test_enter_double_digit_decimal(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('.')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '1.2')
+        self.c.key('3')
+        self.assertEqual(self.c.display(), '1.23')
+
+    def test_check_pi(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('pi')
+        self.assertEqual(self.c.display(), str(math.pi))
+
+    def test_type_number_then_pi(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('pi')
+        self.assertEqual(self.c.display(), str(math.pi))
+        self.c.key('+')
+        self.assertEqual(self.c.display(), str(math.pi))
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), str(math.pi + 2))
+
