@@ -6,6 +6,16 @@ class Tests(unittest.TestCase):
     def setUp(self):
         self.c = calc_v2.Calculator()
 
+    #def test_round_number_large(self):
+    #    self.assertEqual(round_number('123456789'), '')
+
+    #def test_round_number_decimal_over(self):
+    #    self.assertEqual(round_number('1.23456789'), '1.2345679')
+
+    #def test_round_number_decimal_under(self):
+    #    self.assertEqual(round_number('1.23456111'), '1.2345611')
+        
+    
     def test_one_plus_two(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('1')
@@ -102,20 +112,20 @@ class Tests(unittest.TestCase):
     def test_check_pi(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('pi')
-        self.assertEqual(self.c.display(), str(math.pi))
+        self.assertEqual(self.c.display(), '3.1415927')
 
     def test_type_number_then_pi(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('1')
         self.assertEqual(self.c.display(), '1')
         self.c.key('pi')
-        self.assertEqual(self.c.display(), str(math.pi))
+        self.assertEqual(self.c.display(), '3.1415927')
         self.c.key('+')
-        self.assertEqual(self.c.display(), str(math.pi))
+        self.assertEqual(self.c.display(), '3.1415927')
         self.c.key('2')
         self.assertEqual(self.c.display(), '2')
         self.c.key('=')
-        self.assertEqual(self.c.display(), str(math.pi + 2))
+        self.assertEqual(self.c.display(), '5.1415927')
 
     def test_two_cubed(self):
         self.assertEqual(self.c.display(), '0')
@@ -128,13 +138,54 @@ class Tests(unittest.TestCase):
         self.c.key('=')
         self.assertEqual(self.c.display(), '8')
 
-    def test_two_cubed(self):
+    def test_e_times_2(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('e')
-        self.assertEqual(self.c.display(), str(math.e))
+        self.assertEqual(self.c.display(), '2.7182818')
         self.c.key('^')
-        self.assertEqual(self.c.display(), str(math.e))
+        self.assertEqual(self.c.display(), '2.7182818')
         self.c.key('2')
         self.assertEqual(self.c.display(), '2')
         self.c.key('=')
-        self.assertEqual(self.c.display(), str(math.e ** 2))
+        self.assertEqual(self.c.display(), '7.3890561')
+
+    def test_start_with_operations(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('+')
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), '1')
+
+    def test_add_decimals(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('.')
+        self.assertEqual(self.c.display(), '1')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '1.1')
+        self.c.key('+')
+        self.assertEqual(self.c.display(), '1.1')
+        self.c.key('0')
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('.')
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('1')
+        self.assertEqual(self.c.display(), '0.1')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), '1.2')
+
+    def test_plus_minus(self):
+        self.assertEqual(self.c.display(), '0')
+        self.c.key('3')
+        self.assertEqual(self.c.display(), '3')
+        self.c.key('+')
+        self.assertEqual(self.c.display(), '3')
+        self.c.key('-')
+        self.assertEqual(self.c.display(), '3')
+        self.c.key('2')
+        self.assertEqual(self.c.display(), '2')
+        self.c.key('=')
+        self.assertEqual(self.c.display(), '1')
