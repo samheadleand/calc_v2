@@ -30,20 +30,20 @@ BUTTON_LIST = [BUTTON_PLUS, BUTTON_MINUS, BUTTON_MULTIPLY, BUTTON_DIVIDE, BUTTON
 setupgpio()
 
 def key():
-    while True:
-        for button_pin in BUTTON_LIST:
-            if not GPIO.input(button_pin):
-                if button_pin == BUTTON_PLUS:
-                    return '+'
-                elif button_pin == BUTTON_MINUS:
-                    return '-'
-                elif button_pin == BUTTON_MULTIPLY:
-                    return '*'
-                elif button_pin == BUTTON_DIVIDE:
-                    return '/'
-                elif button_pin == BUTTON_EQUALS:
-                    return '='
-                elif button_pin == BUTTON_KILL:
-                    return 'kill'
+    for button_pin in BUTTON_LIST:
+        if not GPIO.input(button_pin):
+            if button_pin == BUTTON_PLUS:
+                return '+'
+            elif button_pin == BUTTON_MINUS:
+                return '-'
+            elif button_pin == BUTTON_MULTIPLY:
+                return '*'
+            elif button_pin == BUTTON_DIVIDE:
+                return '/'
+            elif button_pin == BUTTON_EQUALS:
+                return '='
+            elif button_pin == BUTTON_KILL:
+                return 'kill'
+    return False
 
 

@@ -4,6 +4,7 @@ import wiringpi2
 import time
 import Test_circuit as tc
 import buttons
+import keypad
 
 LEDS = [7, 8]
 
@@ -233,10 +234,19 @@ def write_new_values_to_display(string_number):
 calc = Calculator()
 list_of_relevent_characters = [n for n in string.digits] + list(NUMBERS.keys()) + OPERATIONS + CLEAR + ['='] + ['.']
 
+def find_input():
+    while True:
+        button = buttons.key()
+        key = keypad.scan()
+        if button:
+            return button
+        elif key:
+            return key
+        
 
 def do_sums():
     while True:
-        digit = buttons.key()
+        digit = find_input()
         if digit == 'kill':
             return ''
         elif digit not in list_of_relevent_characters:
