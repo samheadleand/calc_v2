@@ -9,41 +9,43 @@ import time, random, RPi.GPIO as GPIO
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 
-BUTTON_PLUS = 14
-BUTTON_MINUS = 15
-BUTTON_MULTIPLY = 18
-BUTTON_DIVIDE = 23
-BUTTON_EQUALS = 24
-BUTTON_KILL = 25
+COLUMN = [23, 24, 25] # Inputs as below
+
+ROW = [14, 15, 18] # Outputs - set to zero
+
+MAPPING = {(0, 0): 'kill', (0, 1): '^', (0, 2): 'tau',
+           (1, 0): 'e', (1, 1): '+', (1, 2): '-',
+           (2, 0): '*', (2, 1): '/', (2, 2): '='
+           }
 
 
 def setupgpio():
-    GPIO.setup(BUTTON_PLUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(BUTTON_MINUS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(BUTTON_MULTIPLY, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(BUTTON_DIVIDE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(BUTTON_EQUALS, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(BUTTON_KILL, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    for c in COLUMN:
+        GPIO.setup(c, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    for r in ROW:
+        GPIO.setup(r, GPIO.OUT)
+        GPIO.output(r, 1)
 
-BUTTON_LIST = [BUTTON_PLUS, BUTTON_MINUS, BUTTON_MULTIPLY, BUTTON_DIVIDE, BUTTON_EQUALS, BUTTON_KILL]
 
 setupgpio()
 
-def key():
-    for button_pin in BUTTON_LIST:
-        if not GPIO.input(button_pin):
-            if button_pin == BUTTON_PLUS:
-                return '+'
-            elif button_pin == BUTTON_MINUS:
-                return '-'
-            elif button_pin == BUTTON_MULTIPLY:
-                return '*'
-            elif button_pin == BUTTON_DIVIDE:
-                return '/'
-            elif button_pin == BUTTON_EQUALS:
-                return '='
-            elif button_pin == BUTTON_KILL:
-                return 'kill'
+def all_rows_on():
+    for r in ROW:
+        GPIO.output(r, 1)
+
+
+def scan():
+    #which key has been pressed
+    #run loop over each column, set the one I'm on to zero and the other two to 1
+    #check to see if row input is zero or one
+    for r in ROW:
+        all_rows_on()
+        GPIO.output(r, 0)
+        time.sleep(0.01)
+        for c in COLUMN:
+            if not GPIO.input(c):   
+                return MAPPING[(ROW.index(r), COLUMN.index(c))]
     return False
 
-
+time.sleep(1)
+print(scan())

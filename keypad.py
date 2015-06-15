@@ -16,7 +16,7 @@ COLUMN = [27, 4, 10] # Outputs - set to zero
 MAPPING = {(0, 0): '1', (0, 1): '2', (0, 2): '3',
            (1, 0): '4', (1, 1): '5', (1, 2): '6',
            (2, 0): '7', (2, 1): '8', (2, 2): '9',
-           (3, 0): 'clear', (3, 1): '0', (3, 2): 'tau',
+           (3, 0): 'clear', (3, 1): '0', (3, 2): '.',
            }
 
 
@@ -34,9 +34,6 @@ def all_rows_on():
     for r in ROW:
         GPIO.output(r, 1)
 
-def wait_for_key():
-    pass
-
 def scan():
     #which key has been pressed
     #run loop over each column, set the one I'm on to zero and the other two to 1
@@ -50,3 +47,5 @@ def scan():
                 return MAPPING[(ROW.index(r), COLUMN.index(c))]
     return False
 
+time.sleep(1)
+print(scan())

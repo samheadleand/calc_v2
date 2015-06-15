@@ -52,10 +52,7 @@ class SetofLights:
         self.leds[next(self.rotation)].led_on()
         
         
-
-
-
-                    
+         
 #LEDS = [7, 8]
 
 
