@@ -5,16 +5,6 @@ import math
 class Tests(unittest.TestCase):
     def setUp(self):
         self.c = calc_v2.Calculator()
-
-    #def test_round_number_large(self):
-    #    self.assertEqual(round_number('123456789'), '')
-
-    #def test_round_number_decimal_over(self):
-    #    self.assertEqual(round_number('1.23456789'), '1.2345679')
-
-    #def test_round_number_decimal_under(self):
-    #    self.assertEqual(round_number('1.23456111'), '1.2345611')
-        
     
     def test_one_plus_two(self):
         self.assertEqual(self.c.display(), '0')
@@ -46,12 +36,12 @@ class Tests(unittest.TestCase):
         self.c.key('2')
         self.assertEqual(self.c.display(), '2')
         self.c.key('+')
-        self.assertEqual(self.c.display(), '3')
+        self.assertEqual(self.c.display(), '2')
         self.c.key('3')
         self.assertEqual(self.c.display(), '3')
         self.c.key('=')
         self.assertEqual(self.c.display(), '6')
-        
+      
     def test_number_after_equals_without_operator(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('2')
@@ -82,7 +72,7 @@ class Tests(unittest.TestCase):
         self.assertEqual(self.c.display(), '1')
         self.c.key('2')
         self.assertEqual(self.c.display(), '1.2')
-        
+      
     def test_enter_decimal_as_second_number(self):
         self.assertEqual(self.c.display(), '0')
         self.c.key('1')
